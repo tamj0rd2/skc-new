@@ -3,6 +3,7 @@
 import { inspect } from 'util'
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace jest {
     interface Matchers<R, T> {
       toBeCalledWithArgs(...args: OverloadedArguments<T>): R

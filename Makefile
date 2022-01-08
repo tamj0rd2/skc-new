@@ -9,7 +9,7 @@ dev:
 	open http://localhost:3000
 	cd frontend && npx next dev
 
-test: typecheck unit-test integration-test
+test: typecheck lint unit-test integration-test
 
 build:
 	cd frontend && npx next build && npx next export -o build
@@ -43,3 +43,9 @@ integration-test: build
 
 integration-test-watch:
 	cd frontend && CYRPESS_baseUrl=http://localhost:3000 npx cypress open
+
+lint:
+	cd frontend && npx eslint '**/*.ts'
+
+lintfix:
+	cd frontend && npx eslint '**/*.ts' --fix
