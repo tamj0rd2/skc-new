@@ -45,7 +45,7 @@ integration-test-watch:
 	cd frontend && CYRPESS_baseUrl=http://localhost:3000 npx cypress open
 
 lint:
-	cd frontend && npx eslint '**/*.ts'
+	cd frontend && npx eslint '**/*.{ts,tsx}'
 
 lintfix:
-	cd frontend && npx eslint '**/*.ts' --fix
+	cd frontend && npx eslint '**/*.{ts,tsx}' --fix

@@ -9,23 +9,15 @@
     "module": "esnext",
     "jsx": "preserve",
     "paths": {
-      "~/*": [
-        "src/*"
-      ]
+      "~/*": ["src/*"]
     },
-    "lib": [
-      "dom",
-      "es2019"
-    ],
+    "lib": ["dom", "es2019"],
     "skipLibCheck": true,
     "allowJs": true,
     "noEmit": true,
     "incremental": true
   },
-  "include": [
-    "./src/**/*",
-    "./infra/**/*.ts"
-  ],
+  "include": ["./src/**/*", "./infra/**/*.ts", "./next-env.d.ts"],
   "exclude": [
     "artifacts/**/*",
     "dist/**/*",

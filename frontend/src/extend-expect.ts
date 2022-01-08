@@ -1,4 +1,5 @@
 /* eslint-disable func-style */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { inspect } from 'util'
 
@@ -54,7 +55,9 @@ function toBeCalledWith<E extends unknown[]>(
       }
 
       const formattedCalls = calls.map((callArgs: unknown[], i) => {
-        const formattedCallArgs = callArgs.map((arg: any) => this.utils.RECEIVED_COLOR(this.utils.stringify(arg)))
+        const formattedCallArgs = callArgs.map((arg: any) =>
+          this.utils.RECEIVED_COLOR(this.utils.stringify(arg)),
+        )
         return `\t${i + 1}: ${formattedCallArgs.join(', ')}`
       })
 
@@ -101,7 +104,11 @@ function toStrictEqual(this: ToStrictEqualCtx, received: unknown, expected: unkn
 }
 
 function toStrictlyEqual(this: jest.MatcherContext, received: unknown, expected: unknown): R {
-  return toStrictEqual.call({ jestCtx: this, matcherName: 'toStrictlyEqual', strictCheck: true }, received, expected)
+  return toStrictEqual.call(
+    { jestCtx: this, matcherName: 'toStrictlyEqual', strictCheck: true },
+    received,
+    expected,
+  )
 }
 
 function toContainItem(this: jest.MatcherContext, received: unknown, expected: unknown): R {
@@ -132,10 +139,17 @@ function toContainItem(this: jest.MatcherContext, received: unknown, expected: u
   return { pass: true, message: () => 'Nice stuff!' }
 }
 
-function getInvalidTypeMessage(this: jest.MatcherContext, matcherName: string, expected: string, received: unknown) {
+function getInvalidTypeMessage(
+  this: jest.MatcherContext,
+  matcherName: string,
+  expected: string,
+  received: unknown,
+) {
   return [
     `${this.utils.matcherHint(matcherName, 'received', '...expected')}\n`,
-    `${this.utils.BOLD_WEIGHT('Matcher error:')} ${this.utils.RECEIVED_COLOR('received')} value must be ${expected}\n`,
+    `${this.utils.BOLD_WEIGHT('Matcher error:')} ${this.utils.RECEIVED_COLOR(
+      'received',
+    )} value must be ${expected}\n`,
     `Received has type:\t${typeof received}`,
     `Received has value:\t${this.utils.RECEIVED_COLOR(inspect(received))}`,
   ].join('\n')

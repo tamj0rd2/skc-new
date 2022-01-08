@@ -16,6 +16,6 @@
  * @type {Cypress.PluginConfig}
  */
 
- module.exports = function () {
+module.exports = function () {
   // configure plugins here
 }
