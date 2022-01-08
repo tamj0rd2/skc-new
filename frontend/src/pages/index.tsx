@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import { useReducer } from 'react'
 import { createGlobalStyle } from 'styled-components'
-import { GameSetup } from '~/components/welcome/GameSetup'
-import { Welcome } from '~/components/welcome/Welcome'
+import { GameSetup } from '~/components/GameSetup'
+import { PlayingGame } from '~/components/PlayingGame'
+import { Welcome } from '~/components/Welcome'
 import { gameStateReducer, INITIAL_GAME_STATE, Stage } from '~/domain/state'
 
 const GlobalTheme = createGlobalStyle`
@@ -19,7 +20,9 @@ const Home: React.FC = () => {
       case Stage.Welcome:
         return <Welcome dispatch={dispatch} />
       case Stage.SetupGame:
-        return <GameSetup />
+        return <GameSetup dispatch={dispatch} />
+      case Stage.PlayingGame:
+        return <PlayingGame game={state.game} />
     }
   }
 
