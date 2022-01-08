@@ -40,7 +40,7 @@ unit-test-watch:
 
 integration-test: build
 	@# doing this stuff on port 3001 to prevent clashing with the dev server
-	cd frontend && CYRPESS_baseUrl=http://localhost:3001 npx start-server-and-test 'http-server -p 3001 ./build' 3001 'cypress run'
+	cd frontend && npx start-server-and-test 'http-server -p 3001 ./build' 3001 'CYPRESS_baseUrl=http://localhost:3001 cypress run'
 
 integration-test-watch:
 	cd frontend && npx cypress open
