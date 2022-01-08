@@ -12,7 +12,7 @@ dev:
 test: typecheck lint unit-test integration-test
 
 build:
-	cd frontend && NODE_ENV=production npx next build && NODE_ENV=production npx next export -o build
+	cd frontend && npx next build && npx next export -o build
 
 # TODO: switch these commands to the prod stack once I'm happy with the site
 deploy: build
