@@ -17,7 +17,7 @@ build:
 # TODO: switch these commands to the prod stack once I'm happy with the site
 deploy: build
 	cd infra && pulumi stack select skc-frontend-dev && pulumi up -f -y
-	cd infra && BUCKET_NAME=$$(pulumi stack output bucketName) docker-compose up s3-upload
+	cd infra && BUCKET_NAME=$$(pulumi stack output bucketName) docker-compose run s3-upload
 
 destroy:
 	cd infra && pulumi stack select skc-frontend-dev && pulumi destroy -f
