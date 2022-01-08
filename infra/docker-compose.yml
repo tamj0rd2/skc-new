@@ -4,7 +4,7 @@ services:
     volumes:
       - ../frontend/:/frontend
     # TODO: rename /build to /dist
-    command: s3 sync /frontend/build/ s3://${BUCKET_NAME} --acl public-read
+    command: s3 sync /frontend/build/ s3://${BUCKET_NAME} --acl public-read --region eu-west-2
     environment:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
