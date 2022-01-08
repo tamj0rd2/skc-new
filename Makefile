@@ -9,7 +9,7 @@ dev:
 	open http://localhost:3000
 	cd frontend && npx next dev
 
-test: typecheck unit-test
+test: typecheck unit-test integration-test
 
 build:
 	cd frontend && npx next build && npx next export -o build
