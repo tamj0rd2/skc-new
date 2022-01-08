@@ -1,7 +1,13 @@
-export const Welcome: React.FC = () => {
+import { SetupNewGameAction, Dispatch } from '~/domain/state'
+
+interface WelcomeProps {
+  dispatch: Dispatch
+}
+
+export const Welcome: React.FC<WelcomeProps> = ({ dispatch }) => {
   return (
     <div>
-      <button>New game</button>
+      <button onClick={() => dispatch(new SetupNewGameAction())}>New game</button>
     </div>
   )
 }

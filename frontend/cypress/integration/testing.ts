@@ -5,6 +5,7 @@ describe('Can play a 2 player game', () => {
     cy.visit(baseUrl + '/')
     cy.title().should('equal', 'Skull King Calculator')
     cy.findByText('New game').click()
+    cy.findByText('Game setup').should('be.visible')
   })
 })
 
