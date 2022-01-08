@@ -15,3 +15,5 @@ jobs:
         run: make setup-ci
       - name: Tests
         run: make test
+      - name: Build and eploy
+        run: make deploy
