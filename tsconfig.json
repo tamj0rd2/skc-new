@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": true
+  },
+  "references": [
+    {"path": "./frontend"},
+    {"path": "./frontend/cypress"},
+    {"path": "./infra"},
+  ],
+  "include": [],
+  "exclude": ["**/node_modules", "**/.*", "**/bin"]
+}

@@ -28,9 +28,18 @@ ci:
 typecheck:
 	cd frontend && npx tsc --noEmit
 	cd frontend/cypress && npx tsc --noEmit
+	cd infra && npx tsc --noEmit
+
+typecheck-watch:
+	./frontend/node_modules/.bin/tsc -b ./tsconfig.json --watch
 
 unit-test:
 	cd frontend && npx jest
+unit-test-watch:
+	cd frontend && npx jest --watch
 
 integration-test: build
-	cd frontend && npx cypress run
+	cd frontend && CYPRESS_USE_BUILD=true npx cypress run
+
+integration-test-watch:
+	cd frontend && CYRPESS_baseUrl=http://localhost:3000 npx cypress open
