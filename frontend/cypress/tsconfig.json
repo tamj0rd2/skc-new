@@ -4,10 +4,7 @@
     "baseUrl": "../node_modules", // needed if your tests import npm modules,
     "isolatedModules": false,
     "noEmit": true,
-    "types": ["cypress", "@testing-library/cypress"]
+    "types": ["node", "cypress", "@testing-library/cypress"]
   },
-  "include": [
-    "../node_modules/cypress/types",
-    "**/*.ts"
-  ]
+  "include": ["../node_modules/cypress/types", "**/*.ts"]
 }
