@@ -1,0 +1,11 @@
+services:
+  s3-upload:
+    image: amazon/aws-cli
+    volumes:
+      - ../frontend/:/frontend
+    # TODO: rename /build to /dist
+    command: s3 sync /frontend/build/ s3://${BUCKET_NAME} --acl public-read
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      BUCKET_NAME: ${BUCKET_NAME}
