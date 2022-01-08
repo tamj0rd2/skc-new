@@ -12,7 +12,7 @@ dev:
 test: typecheck lint unit-test integration-test
 
 build:
-	cd frontend && npx next build && npx next export -o build
+	cd frontend && NODE_ENV=production npx next build && NODE_ENV=production npx next export -o build
 
 # TODO: switch these commands to the prod stack once I'm happy with the site
 deploy: build
@@ -39,10 +39,11 @@ unit-test-watch:
 	cd frontend && npx jest --watch
 
 integration-test: build
-	cd frontend && CYPRESS_USE_BUILD=true npx cypress run
+	@# doing this stuff on port 3001 to prevent clashing with the dev server
+	cd frontend && CYRPESS_baseUrl=http://localhost:3001 npx start-server-and-test 'http-server -p 3001 ./build' 3001 'cypress run'
 
 integration-test-watch:
-	cd frontend && CYRPESS_baseUrl=http://localhost:3000 npx cypress open
+	cd frontend && npx cypress open
 
 lint:
 	cd frontend && npx eslint '**/*.{ts,tsx}'

@@ -26,8 +26,10 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
+    "http-server": "^14.0.0",
     "jest": "^27.4.7",
     "prettier": "^2.5.1",
+    "start-server-and-test": "^1.14.0",
     "styled-components": "^5.3.3",
     "typescript": "^4.5.4"
   }
