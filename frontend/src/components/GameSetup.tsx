@@ -1,12 +1,12 @@
-import { ErrorMessage } from '@hookform/error-message'
-import { Button } from '@mui/material'
-import { useState } from 'react'
+import { Button, IconButton, TextField } from '@mui/material'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { StartGameAction, WithDispatch } from '~/domain/state'
+import { Delete } from '@mui/icons-material'
 
 export const GameSetup: React.FC<WithDispatch> = ({ dispatch }) => {
-  const [playerCount, setPlayerCount] = useState(0)
+  const [playerButtonNames, setButtonIds] = useState<string[]>([])
 
   const {
     register,
@@ -22,18 +22,35 @@ export const GameSetup: React.FC<WithDispatch> = ({ dispatch }) => {
       })}
     >
       <h1>Game setup</h1>
-      <Button variant="outlined" onClick={() => setPlayerCount(playerCount + 1)} disabled={playerCount === 6}>
+      <Button
+        variant="outlined"
+        onClick={() => setButtonIds([...playerButtonNames, Date.now().toString()])}
+        disabled={playerButtonNames.length === 6}
+      >
         Add player
       </Button>
-      <Button variant="contained" type="submit" disabled={playerCount < 2}>
+      <Button variant="contained" type="submit" disabled={playerButtonNames.length < 2}>
         Start game
       </Button>
-      {new Array(playerCount).fill(0).map((_, i) => {
-        const fieldName = i.toString()
+      {playerButtonNames.map((fieldName, i) => {
         return (
-          <PlayerInput key={i}>
-            <input {...register(fieldName, { required: 'Enter a name' })} placeholder={`Player ${i + 1}`} />
-            <ErrorMessage errors={errors} name={fieldName} />
+          <PlayerInput key={fieldName}>
+            <TextField
+              {...register(fieldName, { required: 'Enter a name' })}
+              label={`Player ${i + 1}`}
+              error={!!errors[fieldName]}
+              helperText={errors[fieldName]?.message}
+            />
+            <IconButton
+              aria-label="delete"
+              onClick={() => {
+                const updatedButtonIds = [...playerButtonNames]
+                updatedButtonIds.splice(i, 1)
+                setButtonIds(updatedButtonIds)
+              }}
+            >
+              <Delete />
+            </IconButton>
           </PlayerInput>
         )
       })}
@@ -42,5 +59,5 @@ export const GameSetup: React.FC<WithDispatch> = ({ dispatch }) => {
 }
 
 const PlayerInput = styled.div`
-  display: block;
+  margin-top: 16px;
 `

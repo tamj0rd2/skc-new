@@ -11,9 +11,9 @@ describe('Playing a game', () => {
 
   it('can add 2 players', () => {
     cy.findByText('Add player').click()
-    cy.findByPlaceholderText('Player 1').type(Tam)
+    cy.findByLabelText('Player 1').type(Tam)
     cy.findByText('Add player').click()
-    cy.findByPlaceholderText('Player 2').type(Peter)
+    cy.findByLabelText('Player 2').type(Peter)
   })
 
   it('can start the game', () => {
