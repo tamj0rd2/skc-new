@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useLayoutEffect, useReducer } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { GameSetup } from '~/components/GameSetup'
-import { PlayingGame } from '~/components/game/PlayingGame'
+import { PlayGame } from '~/components/game/Game'
 import { Welcome } from '~/components/Welcome'
 import { gameStateReducer, INITIAL_GAME_STATE, ResetStateAction, Stage } from '~/domain/state'
 
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
       case Stage.SetupGame:
         return <GameSetup dispatch={dispatch} />
       case Stage.PlayingGame:
-        return <PlayingGame game={state.game} dispatch={dispatch} />
+        return <PlayGame game={state.game} dispatch={dispatch} />
     }
   }
 
