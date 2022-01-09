@@ -1,38 +1,43 @@
+import { ErrorMessage } from '@hookform/error-message'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { StartGameAction, WithDispatch } from '~/domain/state'
 
 export const GameSetup: React.FC<WithDispatch> = ({ dispatch }) => {
-  const [players, setPlayers] = useState<string[]>([])
+  const [playerCount, setPlayerCount] = useState(0)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
   return (
-    <section>
+    <form
+      onSubmit={handleSubmit((data) => {
+        const playerNames = Object.entries(data).map(([, name]) => name)
+        dispatch(new StartGameAction(playerNames))
+      })}
+    >
       <h1>Game setup</h1>
-      <button onClick={() => setPlayers([...players, ''])}>Add player</button>
-      {players.map((p, i) => (
-        <PlayerInput
-          key={i}
-          type="text"
-          placeholder={`Player ${i + 1}`}
-          onChange={(e) => {
-            const updatedPlayers = [...players]
-            updatedPlayers[i] = e.target.value
-            setPlayers(updatedPlayers)
-          }}
-        />
-      ))}
-      <button
-        onClick={() => {
-          // TODO: handle errors
-          dispatch(new StartGameAction(players))
-        }}
-      >
-        Start game
+      <button onClick={() => setPlayerCount(playerCount + 1)} disabled={playerCount === 6}>
+        Add player
       </button>
-    </section>
+      {new Array(playerCount).fill(0).map((_, i) => {
+        const fieldName = i.toString()
+        return (
+          <PlayerInput key={i}>
+            <input {...register(fieldName, { required: 'Enter a name' })} placeholder={`Player ${i + 1}`} />
+            <ErrorMessage errors={errors} name={fieldName} />
+          </PlayerInput>
+        )
+      })}
+      <button type="submit">Start game</button>
+    </form>
   )
 }
 
-const PlayerInput = styled.input`
+const PlayerInput = styled.div`
   display: block;
 `
