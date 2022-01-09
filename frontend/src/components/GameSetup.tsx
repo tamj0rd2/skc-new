@@ -1,4 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message'
+import { Button } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
@@ -21,12 +22,12 @@ export const GameSetup: React.FC<WithDispatch> = ({ dispatch }) => {
       })}
     >
       <h1>Game setup</h1>
-      <button onClick={() => setPlayerCount(playerCount + 1)} disabled={playerCount === 6}>
+      <Button variant="outlined" onClick={() => setPlayerCount(playerCount + 1)} disabled={playerCount === 6}>
         Add player
-      </button>
-      <button type="submit" disabled={playerCount < 2}>
+      </Button>
+      <Button variant="contained" type="submit" disabled={playerCount < 2}>
         Start game
-      </button>
+      </Button>
       {new Array(playerCount).fill(0).map((_, i) => {
         const fieldName = i.toString()
         return (

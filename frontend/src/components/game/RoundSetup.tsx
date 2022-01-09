@@ -1,4 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message'
+import { Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { WithDispatch, Game, Player, StartRoundAction, PlayerWithBet } from '~/domain/state'
@@ -48,7 +49,9 @@ export const RoundSetup: React.FC<RoundSetupProps & { playerToDeal: Player }> = 
           )
         })}
       </ul>
-      <button type="submit">Start round</button>
+      <Button variant="contained" type="submit">
+        Start round
+      </Button>
     </form>
   )
 }

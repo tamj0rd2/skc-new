@@ -29,7 +29,7 @@ describe('Playing a game', () => {
   it('can play round 1 and keep track of the trick amounts', () => {
     cy.findByText('Start round').click()
     cy.findByText('Round 1: Play cards - Tam starts').should('be.visible')
-    cy.findByText('Trick 1 winner:').siblings('ul').findByText(Tam).click()
+    cy.findByText('Trick 1 winner:').siblings().findByText(Tam).click()
   })
 })
 

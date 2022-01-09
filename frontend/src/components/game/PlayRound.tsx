@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import styled from 'styled-components'
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import { WithDispatch, Game, Player } from '~/domain/state'
 
 interface PlayRoundProps extends WithDispatch {
@@ -11,47 +10,34 @@ export const PlayRound: React.FC<PlayRoundProps & { playerToStart: Player }> = (
   const numOfTricks = game.roundIndex + 1
 
   return (
-    <div>
+    <form>
       <h1>
         Round {game.roundIndex + 1}: Play cards - {playerToStart.name} starts
       </h1>
       {new Array(numOfTricks).fill(0).map((_, i) => (
-        <TrickScoringBit key={i} trickIndex={i} players={game.players} />
+        <TrickWinnerSelection key={i} trickIndex={i} players={game.players} />
       ))}
-    </div>
+    </form>
   )
 }
 
-const TrickScoringBit: React.FC<{ trickIndex: number; players: Player[] }> = (props) => {
+const TrickWinnerSelection: React.FC<{ trickIndex: number; players: Player[] }> = (props) => {
   const { trickIndex, players } = props
-  const [winner, setWinner] = useState<Player | undefined>()
 
   return (
-    <TrickScoring>
-      <h2>Trick {trickIndex + 1} winner:</h2>
-      <ul>
-        {players.map((player, i) => (
-          <WinnerButton key={i} isWinner={winner === player} onClick={() => setWinner(player)}>
-            {player.name}
-          </WinnerButton>
+    <FormControl component="fieldset">
+      <FormLabel component="legend">Trick {trickIndex + 1} winner:</FormLabel>
+      <RadioGroup aria-label="gender" defaultValue="female" name="radio-buttons-group" row>
+        {players.map((player) => (
+          <FormControlLabel
+            key={player.name}
+            value={player.name}
+            control={<Radio />}
+            label={player.name}
+            labelPlacement="start"
+          />
         ))}
-      </ul>
-    </TrickScoring>
+      </RadioGroup>
+    </FormControl>
   )
 }
-
-const TrickScoring = styled.section`
-  h2 {
-    display: inline-block;
-  }
-
-  ul {
-    display: inline-block;
-    padding-left: 0;
-  }
-`
-
-const WinnerButton = styled.button<{ isWinner?: boolean }>`
-  background: ${(props) => (props.isWinner ? 'green' : 'default')};
-  color: ${(props) => (props.isWinner ? 'white' : 'default')};
-`

@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import { SetupNewGameAction, Dispatch } from '~/domain/state'
 
 interface WelcomeProps {
@@ -7,7 +8,9 @@ interface WelcomeProps {
 export const Welcome: React.FC<WelcomeProps> = ({ dispatch }) => {
   return (
     <div>
-      <button onClick={() => dispatch(new SetupNewGameAction())}>New game</button>
+      <Button variant="contained" onClick={() => dispatch(new SetupNewGameAction())}>
+        New game
+      </Button>
     </div>
   )
 }
