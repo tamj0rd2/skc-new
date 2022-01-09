@@ -24,6 +24,9 @@ export const GameSetup: React.FC<WithDispatch> = ({ dispatch }) => {
       <button onClick={() => setPlayerCount(playerCount + 1)} disabled={playerCount === 6}>
         Add player
       </button>
+      <button type="submit" disabled={playerCount < 2}>
+        Start game
+      </button>
       {new Array(playerCount).fill(0).map((_, i) => {
         const fieldName = i.toString()
         return (
@@ -33,7 +36,6 @@ export const GameSetup: React.FC<WithDispatch> = ({ dispatch }) => {
           </PlayerInput>
         )
       })}
-      <button type="submit">Start game</button>
     </form>
   )
 }
