@@ -1,4 +1,4 @@
-type Action = SetupNewGameAction | StartGameAction | StartRoundAction
+type Action = SetupNewGameAction | StartGameAction | StartRoundAction | ResetStateAction
 
 export type State =
   | {
@@ -27,6 +27,8 @@ export const INITIAL_GAME_STATE: State = {
 
 export const gameStateReducer = (currentState: State, action: Action): State => {
   switch (action.type) {
+    case ActionType.ResetState:
+      return INITIAL_GAME_STATE
     case ActionType.SetupNewGame:
       return {
         stage: Stage.SetupGame,
@@ -56,6 +58,7 @@ const enum ActionType {
   SetupNewGame = 'SetupNewGame',
   StartGame = 'StartGame',
   StartRound = 'StartRound',
+  ResetState = 'ResetState',
 }
 
 export class SetupNewGameAction {
@@ -106,3 +109,7 @@ export enum RoundPhase {
 }
 
 type Round = Record<string, { bet: number }>
+
+export class ResetStateAction {
+  public readonly type = ActionType.ResetState
+}

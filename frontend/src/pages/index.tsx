@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import { useReducer } from 'react'
+import { useLayoutEffect, useReducer } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { GameSetup } from '~/components/GameSetup'
 import { PlayingGame } from '~/components/PlayingGame'
 import { Welcome } from '~/components/Welcome'
-import { gameStateReducer, INITIAL_GAME_STATE, Stage } from '~/domain/state'
+import { gameStateReducer, INITIAL_GAME_STATE, ResetStateAction, Stage } from '~/domain/state'
 
 const GlobalTheme = createGlobalStyle`
   body {
@@ -13,7 +13,13 @@ const GlobalTheme = createGlobalStyle`
 `
 
 const Home: React.FC = () => {
-  const [state, dispatch] = useReducer(gameStateReducer, INITIAL_GAME_STATE)
+  const storedState = global.localStorage?.getItem('state')
+  const initialState = storedState ? JSON.parse(storedState) : INITIAL_GAME_STATE
+
+  const [state, dispatch] = useReducer(gameStateReducer, initialState)
+  useLayoutEffect(() => {
+    localStorage.setItem('state', JSON.stringify(state))
+  }, [state])
 
   const ComponentToUse: React.FC = () => {
     switch (state.stage) {
@@ -33,6 +39,7 @@ const Home: React.FC = () => {
         <title>Skull King Calculator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <button onClick={() => dispatch(new ResetStateAction())}>Reset everything</button>
       <ComponentToUse />
     </main>
   )
