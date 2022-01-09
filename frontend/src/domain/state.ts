@@ -94,7 +94,7 @@ export interface Player {
   name: string
 }
 
-type PlayerWithBet = Player & { bet: number }
+export type PlayerWithBet = Player & { bet: number }
 
 export interface Game {
   players: Player[]
