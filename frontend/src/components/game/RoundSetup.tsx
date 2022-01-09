@@ -1,5 +1,4 @@
-import { ErrorMessage } from '@hookform/error-message'
-import { Button } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { WithDispatch, Game, Player, StartRoundAction, PlayerWithBet } from '~/domain/state'
@@ -18,7 +17,7 @@ export const RoundSetup: React.FC<RoundSetupProps & { playerToDeal: Player }> = 
   } = useForm()
 
   const roundNumber = game.roundIndex + 1
-  const invalidBetMessage = `Bet must be from 0 to ${roundNumber}`
+  const invalidBetMessage = `Bet must be between 0 and ${roundNumber}`
 
   return (
     <form
@@ -30,30 +29,32 @@ export const RoundSetup: React.FC<RoundSetupProps & { playerToDeal: Player }> = 
       <h1>
         Round {roundNumber}: {playerToDeal.name} deals, then place bets
       </h1>
-      <ul>
-        {game.players.map((player) => {
-          return (
-            <BetInput key={player.name}>
-              {player.name}
-              <input
-                type="number"
-                placeholder="Bet"
-                {...register(player.name, {
-                  required: invalidBetMessage,
-                  min: { value: 0, message: invalidBetMessage },
-                  max: { value: roundNumber, message: invalidBetMessage },
-                })}
-              />
-              <ErrorMessage errors={errors} name={player.name} />
-            </BetInput>
-          )
-        })}
-      </ul>
+      {game.players.map((player) => {
+        const fieldName = player.name
+        return (
+          <PlayerInput key={fieldName}>
+            <TextField
+              label={`${player.name}'s bet`}
+              error={!!errors[fieldName]}
+              helperText={errors[fieldName]?.message}
+              type="number"
+              {...register(player.name, {
+                required: invalidBetMessage,
+                min: { value: 0, message: invalidBetMessage },
+                max: { value: roundNumber, message: invalidBetMessage },
+              })}
+            />
+          </PlayerInput>
+        )
+      })}
       <Button variant="contained" type="submit">
-        Start round
+        Start round {roundNumber}
       </Button>
     </form>
   )
 }
 
-const BetInput = styled.li``
+const PlayerInput = styled.div`
+  margin-top: 16px;
+  margin-bottom: 16px;
+`
