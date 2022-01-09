@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useLayoutEffect, useReducer } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import { GameSetup } from '~/components/GameSetup'
-import { PlayingGame } from '~/components/PlayingGame'
+import { PlayingGame } from '~/components/game/PlayingGame'
 import { Welcome } from '~/components/Welcome'
 import { gameStateReducer, INITIAL_GAME_STATE, ResetStateAction, Stage } from '~/domain/state'
 
