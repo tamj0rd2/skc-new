@@ -21,9 +21,14 @@ describe('Playing a game', () => {
   })
 
   it('can place bets for round 1', () => {
-    cy.findByText('Round 1: Place bets').should('be.visible')
+    cy.findByText('Round 1: Peter deals, then place bets').should('be.visible')
     cy.findByText(Tam).should('be.visible').siblings().findByPlaceholderText('Bet').type('1')
     cy.findByText(Peter).should('be.visible').siblings().findByPlaceholderText('Bet').type('1')
+  })
+
+  it('can play round 1 and keep track of the trick amounts', () => {
+    cy.findByText('Start round').click()
+    cy.findByText('Round 1: Play cards - Tam starts').should('be.visible')
   })
 })
 

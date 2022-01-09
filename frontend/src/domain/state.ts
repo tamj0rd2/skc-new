@@ -1,4 +1,4 @@
-type Action = SetupNewGameAction | StartGameAction
+type Action = SetupNewGameAction | StartGameAction | StartRoundAction
 
 export type State =
   | {
@@ -34,7 +34,20 @@ export const gameStateReducer = (currentState: State, action: Action): State => 
     case ActionType.StartGame:
       return {
         stage: Stage.PlayingGame,
-        game: { roundIndex: 0, players: action.players },
+        game: { roundIndex: 0, players: action.players, roundPhase: RoundPhase.Betting, rounds: [] },
+      }
+    case ActionType.StartRound:
+      if (currentState.stage != Stage.PlayingGame) {
+        throw new Error("Can't start a round when not in the playing game stage")
+      }
+
+      return {
+        ...currentState,
+        game: {
+          ...currentState.game,
+          roundPhase: RoundPhase.Playing,
+          rounds: [...currentState.game.rounds, action.round],
+        },
       }
   }
 }
@@ -42,6 +55,7 @@ export const gameStateReducer = (currentState: State, action: Action): State => 
 const enum ActionType {
   SetupNewGame = 'SetupNewGame',
   StartGame = 'StartGame',
+  StartRound = 'StartRound',
 }
 
 export class SetupNewGameAction {
@@ -62,12 +76,33 @@ export class StartGameAction {
   }
 }
 
+export class StartRoundAction {
+  public readonly type = ActionType.StartRound
+  public readonly round: Round
+
+  constructor(playerBets: PlayerWithBet[]) {
+    this.round = playerBets.reduce<Round>((round, player) => {
+      return { ...round, [player.name]: { bet: player.bet } }
+    }, {})
+  }
+}
+
 export interface Player {
   name: string
-  bet?: number
 }
+
+type PlayerWithBet = Player & { bet: number }
 
 export interface Game {
   players: Player[]
   roundIndex: number
+  roundPhase: RoundPhase
+  rounds: Round[]
 }
+
+export enum RoundPhase {
+  Betting = 'Betting',
+  Playing = 'Playing',
+}
+
+type Round = Record<string, { bet: number }>

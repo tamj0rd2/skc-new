@@ -22,7 +22,7 @@ const Home: React.FC = () => {
       case Stage.SetupGame:
         return <GameSetup dispatch={dispatch} />
       case Stage.PlayingGame:
-        return <PlayingGame game={state.game} />
+        return <PlayingGame game={state.game} dispatch={dispatch} />
     }
   }
 
